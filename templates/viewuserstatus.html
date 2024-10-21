@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Loan Status - Loan Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .loan-status {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fafafa;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .loan-status p {
+            margin: 10px 0;
+        }
+
+        .status {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .no-loan-message {
+            text-align: center;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Loan Status</h2>
+
+        <div id="loanStatusContainer">
+            <!-- Loan status will be displayed here -->
+        </div>
+
+        <a href="/apply" class="btn">Apply for New Loan</a>
+    </div>
+
+    <script>
+        // Example loan data; this would be fetched from an API in a real app
+        const loanData = {
+            amount: 300000,
+            tenure: 3,
+            purpose: 'Car Loan',
+            status: 'pending'  // Can be 'pending', 'approved', or 'rejected'
+        };
+
+        const loanStatusContainer = document.getElementById('loanStatusContainer');
+
+        function displayLoanStatus() {
+            if (loanData) {
+                const statusElement = document.createElement('div');
+                statusElement.className = 'loan-status';
+
+                statusElement.innerHTML = `
+                    <p><strong>Loan Amount:</strong> ₹${loanData.amount}</p>
+                    <p><strong>Tenure:</strong> ${loanData.tenure} years</p>
+                    <p><strong>Purpose:</strong> ${loanData.purpose}</p>
+                    <p><strong>Status:</strong> <span class="status">${loanData.status.toUpperCase()}</span></p>
+                `;
+
+                loanStatusContainer.appendChild(statusElement);
+            } else {
+                const noLoanMessage = document.createElement('div');
+                noLoanMessage.className = 'no-loan-message';
+                noLoanMessage.innerHTML = '<p>You have no loan applications at the moment.</p>';
+                loanStatusContainer.appendChild(noLoanMessage);
+            }
+        }
+
+        // Call the function to display loan status
+        displayLoanStatus();
+
+        // In a real app, you'd fetch the loan status from the backend via an API call like this:
+        /*
+        fetch('/api/loans/status', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer your-jwt-token' // Include JWT token here
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loan) {
+                // Update loanData with the API response and call displayLoanStatus
+                loanData = data.loan;
+                displayLoanStatus();
+            } else {
+                // No loan data, display "no loan" message
+                loanData = null;
+                displayLoanStatus();
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching loan status:', error);
+        });
+        */
+    </script>
+</body>
+</html>

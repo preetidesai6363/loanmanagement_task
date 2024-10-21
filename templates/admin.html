@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Loan Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        .btn.approve {
+            background-color: #28a745;
+        }
+
+        .btn.reject {
+            background-color: #dc3545;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .status-message {
+            text-align: center;
+            font-size: 18px;
+            color: green;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Loan ID</th>
+                    <th>Applicant</th>
+                    <th>Amount</th>
+                    <th>Tenure</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="loanTable">
+                <!-- Loan data will be injected here -->
+            </tbody>
+        </table>
+
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <script>
+        const loans = [
+            // Sample loan data; in a real-world app, you'd fetch this data from the API.
+            { id: 1, applicant: 'John Doe', amount: 500000, tenure: 3, purpose: 'Home Renovation', status: 'pending' },
+            { id: 2, applicant: 'Jane Smith', amount: 200000, tenure: 2, purpose: 'Education', status: 'pending' }
+        ];
+
+        const loanTable = document.getElementById('loanTable');
+        const statusMessage = document.getElementById('statusMessage');
+
+        // Function to render the loan table
+        function renderLoans() {
+            loanTable.innerHTML = '';  // Clear the table first
+            loans.forEach(loan => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${loan.id}</td>
+                    <td>${loan.applicant}</td>
+                    <td>₹${loan.amount}</td>
+                    <td>${loan.tenure} years</td>
+                    <td>${loan.purpose}</td>
+                    <td>${loan.status}</td>
+                    <td>
+                        <button class="btn approve" onclick="makeDecision(${loan.id}, 'approve')">Approve</button>
+                        <button class="btn reject" onclick="makeDecision(${loan.id}, 'reject')">Reject</button>
+                    </td>
+                `;
+                loanTable.appendChild(row);
+            });
+        }
+
+        // Function to handle loan approval/rejection
+        function makeDecision(loanId, decision) {
+            const loan = loans.find(l => l.id === loanId);
+            if (loan) {
+                loan.status = decision === 'approve' ? 'approved' : 'rejected';
+
+                // Show status message
+                statusMessage.textContent = `Loan ID ${loanId} has been ${loan.status}.`;
+
+                // Update the table
+                renderLoans();
+
+                // In a real-world scenario, you'd make an API call here
+                // Example:
+                // fetch('/api/admin/loans/decision', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'Authorization': 'Bearer {token}' // Include JWT token
+                //     },
+                //     body: JSON.stringify({ loanId: loanId, decision: decision })
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     // Handle API response
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                // });
+            }
+        }
+
+        // Initial rendering of the loan table
+        renderLoans();
+    </script>
+</body>
+</html>

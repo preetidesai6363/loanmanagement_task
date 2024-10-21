@@ -1,0 +1,168 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Loan Management API",
+    "description": "API Documentation for Loan Management System",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "schemes": ["http"],
+  "paths": {
+    "/api/register": {
+      "post": {
+        "summary": "User Registration",
+        "description": "Register a new user with email and password",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "409": {
+            "description": "User already exists"
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "summary": "User Login",
+        "description": "Authenticate a user and return a JWT token",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful, JWT token returned"
+          },
+          "401": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/api/loans/apply": {
+      "post": {
+        "summary": "Apply for Loan",
+        "description": "Submit a new loan application",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "JWT token for user authentication",
+            "type": "string",
+            "example": "Bearer {token}"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "integer",
+                  "example": 500000
+                },
+                "tenure": {
+                  "type": "integer",
+                  "example": 5
+                },
+                "purpose": {
+                  "type": "string",
+                  "example": "House renovation"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Loan application submitted successfully"
+          },
+          "409": {
+            "description": "Duplicate loan application"
+          }
+        }
+      }
+    },
+    "/api/admin/login": {
+      "post": {
+        "summary": "Admin Login",
+        "description": "Logs in an admin user.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "admin@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "admin"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    }
+  }
+}

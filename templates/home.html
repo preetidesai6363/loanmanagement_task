@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Loan Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        nav {
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+        }
+        nav a {
+            color: #fff;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/api/loans/apply">Loan Appliaction</a>
+        <a href="/api/loans/status">Loan Status</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="container">
+        <h1>Welcome to the Loan Management System</h1>
+        <p>This is your home page. Here you can manage your loans and check your loan status.</p>
+    </div>
+</body>
+</html>
